@@ -16,7 +16,7 @@ var socket = io();
 // Mandamos el usuario que entro al chat
 socket.on('connect', () => {
     socket.emit('entrarChat', usuario , ( resp ) => {
-        console.log( resp.ok ? `Conectado : ${ resp.msg.nombre }, sala : ${ resp.msg.sala }` : resp.msg );
+        renderUser( resp );
     });
 });
 
@@ -26,20 +26,22 @@ socket.on('disconnect', () => {
 
 // Notifica y muestra los usuario conectados
 socket.on("notification-userConn", ( data ) => {
-    console.log( data );
+    renderUser( data );
 });
 
 // Notifica y muestra el mensaje de usuario desconectado
 socket.on("notification-leaveUser", ( data ) => {
-    console.log( data );
+    renderMessage( data , false );
+    scrollBottom();
 });
 
 // Evento para enviar mensaje al servidor
-// socket.emit("crear-mensaje-cli", { mensage : "Algo" } );
+// socket.emit("crear-mensaje-cli", { mensaje : "Algo" } );
 
 // Evento escucha mensaje del servidor
 socket.on("enviar-mensaje-ser", ( data ) => {
-    console.log( data );
+    renderMessage( data , false );
+    scrollBottom();
 });
 
 // Evento para enviar mensaje privado

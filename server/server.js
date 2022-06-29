@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static("public"));
 
-io.on("connection", (socket) => socketController(socket, io) );
+io.on("connection", socketController );
 
 server.listen(port, (err) => {
 
